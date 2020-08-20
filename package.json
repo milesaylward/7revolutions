@@ -1,0 +1,38 @@
+{
+  "name": "7revolutions",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "start": "nuxt",
+    "export": "nuxt export",
+    "serve": "nuxt serve",
+    "deploy": "nuxt generate && surge ./dist 7revolution.surge.sh",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "yarn lint:js --fix"
+  },
+  "dependencies": {
+    "@contentful/rich-text-html-renderer": "^14.1.1",
+    "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "contentful": "^7.14.6",
+    "contentful-rich-text-vue-renderer": "^1.1.5",
+    "moment": "^2.27.0",
+    "nuxt": "^2.13.0",
+    "rellax": "^1.12.1",
+    "vue-material": "1.0.0-beta-11"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^3.0.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/svg": "^0.1.11",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.2.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^9.0.2"
+  }
+}

@@ -1,0 +1,185 @@
+@import './_variables';
+// TODO: import language files as necessary
+
+// Stickersheet breakpoint helper mixin
+@mixin breakpoint($mq01: 0, $mq2: false, $maxmin: max-width) {
+  @if $mq2 == false {
+    @media ($maxmin: $mq01) {
+      @content;
+    }
+  }
+  @else {
+    @media (min-width: $mq01) and (max-width: $mq2) {
+      @content;
+    }
+  }
+}
+
+// Stickersheet mixin
+@mixin sticker-sheet-map($sticker-sheet-map) {
+  @each $breakpoint, $map in $sticker-sheet-map {
+    @if $breakpoint == null {
+      @each $prop, $value in $map {
+        #{$prop}: $value;
+      }
+    } @else {
+      @include breakpoint($breakpoint, false, min-width) {
+        @each $prop, $value in $map {
+          #{$prop}: $value;
+        }
+      }
+    }
+  }
+}
+
+// Step 1: Define indivudal breakpoint settings for each entity. Mobile first!
+// TODO: Define your project Figma file/lead creative's settings for each entity here.
+
+// Typography
+$h1-small-map: (
+  font-size: 24px,
+  line-height: 29px,
+);
+
+$h1-map: (
+  font-size: 41px,
+  line-height: 49px,
+);
+
+$h2-small-map: (
+  font-size: 24px,
+  line-height: 29px,
+);
+
+$h2-map: (
+  font-size: 40px,
+  line-height: 48px,
+);
+
+$h3-map: (
+  font-size: 18px,
+  line-height: 22px,
+);
+
+$h4-small-map: (
+  font-size: 16px,
+  line-height: 19px,
+);
+
+$h4-map: (
+  font-size: 20px,
+  line-height: 24px,
+  letter-spacing: 1.5px,
+);
+
+$body-small-map: (
+  font-size: 14px,
+  line-height: 25px,
+);
+
+$body-map: (
+  font-size: 16px,
+  line-height: 29px
+);
+
+$source-map: (
+  font-size: 12px,
+  line-height: 22px
+);
+
+$h1-sticker-sheet: (
+  null: $h1-small-map,
+  $md: $h1-map,
+);
+$h2-sticker-sheet: (
+  null: $h2-small-map,
+  $md: $h2-map,
+);
+$h3-sticker-sheet: (
+  null: $h3-map,
+);
+$h4-sticker-sheet: (
+  null: $h4-small-map,
+  $md: $h4-map,
+);
+$body-sticker-sheet: (
+  null: $body-small-map,
+  $md: $body-map,
+);
+$source-map: (
+  null: $source-map,
+);
+
+// Step 3: Import sticker sheet maps to their appropriate rules.
+body {
+  h1, h2, h3 {
+    font-family: $fontHeadline;
+    font-weight: 600;
+  }
+  h1 {
+    @include sticker-sheet-map($h1-sticker-sheet);
+  }
+  
+  h2 {
+    @include sticker-sheet-map($h2-sticker-sheet);
+    &.light { color: $offWhite; }
+  }
+  h3 {
+    @include sticker-sheet-map($h3-sticker-sheet);
+  }
+  h4 {
+    font-family: $fontAccent;
+    text-transform: uppercase;
+    @include sticker-sheet-map($h4-sticker-sheet);
+    color: $gold;
+    font-weight: 300;
+  }
+  button {
+    font-family: $fontAccent;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  a {
+    transition: color 300ms $easeOutMaterial;
+    text-decoration: none;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      background-color: $darkGrey;
+      width: 100%;
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      transform-origin: center;
+      transition: transform 250ms $easeOutMaterial;
+      transform: scaleX(0);
+    }
+    &:hover {
+      &:after {
+        transform: scaleX(1);
+      }
+    }
+  }
+  p, a, input, select, textarea {
+    @include sticker-sheet-map($body-sticker-sheet);
+    font-family: $fontBody;
+    color: $darkGrey;
+    &.light { color: $offWhite; }
+    &.source {
+      @include sticker-sheet-map($source-map);
+    }
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px $offWhite inset;
+    transition: background-color 50000s ease-in-out 0s;
+  }
+}
